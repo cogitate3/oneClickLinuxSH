@@ -1,0 +1,423 @@
+{
+  "settings": [
+    {
+      "key": "version",
+      "value": "v3.8.0",
+      "help": "",
+      "type": "string",
+      "options": "",
+      "group": 1,
+      "flag": 2
+    },
+    {
+      "key": "site_title",
+      "value": "AList",
+      "help": "",
+      "type": "string",
+      "options": "",
+      "group": 1,
+      "flag": 0
+    },
+    {
+      "key": "announcement",
+      "value": "欢迎访问私人存储",
+      "help": "",
+      "type": "text",
+      "options": "",
+      "group": 1,
+      "flag": 0
+    },
+    {
+      "key": "pagination_type",
+      "value": "all",
+      "help": "",
+      "type": "select",
+      "options": "all,pagination,load_more,auto_load_more",
+      "group": 1,
+      "flag": 0
+    },
+    {
+      "key": "default_page_size",
+      "value": "30",
+      "help": "",
+      "type": "number",
+      "options": "",
+      "group": 1,
+      "flag": 0
+    },
+    {
+      "key": "allow_indexed",
+      "value": "false",
+      "help": "",
+      "type": "bool",
+      "options": "",
+      "group": 1,
+      "flag": 0
+    },
+    {
+      "key": "logo",
+      "value": "https://cdn.jsdelivr.net/gh/alist-org/logo@main/logo.svg",
+      "help": "",
+      "type": "text",
+      "options": "",
+      "group": 2,
+      "flag": 0
+    },
+    {
+      "key": "favicon",
+      "value": "https://cdn.jsdelivr.net/gh/alist-org/logo@main/logo.svg",
+      "help": "",
+      "type": "string",
+      "options": "",
+      "group": 2,
+      "flag": 0
+    },
+    {
+      "key": "main_color",
+      "value": "#1890ff",
+      "help": "",
+      "type": "string",
+      "options": "",
+      "group": 2,
+      "flag": 0
+    },
+    {
+      "key": "home_icon",
+      "value": "🏠",
+      "help": "",
+      "type": "string",
+      "options": "",
+      "group": 2,
+      "flag": 0
+    },
+    {
+      "key": "home_container",
+      "value": "max_980px",
+      "help": "",
+      "type": "select",
+      "options": "max_980px,hope_container",
+      "group": 2,
+      "flag": 0
+    },
+    {
+      "key": "settings_layout",
+      "value": "list",
+      "help": "",
+      "type": "select",
+      "options": "list,responsive",
+      "group": 2,
+      "flag": 0
+    },
+    {
+      "key": "text_types",
+      "value": "txt,htm,html,xml,java,properties,sql,js,md,json,conf,ini,vue,php,py,bat,gitignore,yml,go,sh,c,cpp,h,hpp,tsx,vtt,srt,ass,rs,lrc",
+      "help": "",
+      "type": "text",
+      "options": "",
+      "group": 3,
+      "flag": 1
+    },
+    {
+      "key": "audio_types",
+      "value": "mp3,flac,ogg,m4a,wav,opus",
+      "help": "",
+      "type": "text",
+      "options": "",
+      "group": 3,
+      "flag": 1
+    },
+    {
+      "key": "video_types",
+      "value": "mp4,mkv,avi,mov,rmvb,webm,flv",
+      "help": "",
+      "type": "text",
+      "options": "",
+      "group": 3,
+      "flag": 1
+    },
+    {
+      "key": "image_types",
+      "value": "jpg,tiff,jpeg,png,gif,bmp,svg,ico,swf,webp",
+      "help": "",
+      "type": "text",
+      "options": "",
+      "group": 3,
+      "flag": 1
+    },
+    {
+      "key": "proxy_types",
+      "value": "m3u8",
+      "help": "",
+      "type": "text",
+      "options": "",
+      "group": 3,
+      "flag": 1
+    },
+    {
+      "key": "proxy_ignore_headers",
+      "value": "authorization,referer",
+      "help": "",
+      "type": "text",
+      "options": "",
+      "group": 3,
+      "flag": 1
+    },
+    {
+      "key": "external_previews",
+      "value": "{}",
+      "help": "",
+      "type": "text",
+      "options": "",
+      "group": 3,
+      "flag": 0
+    },
+    {
+      "key": "iframe_previews",
+      "value": "{\n\t\"doc,docx,xls,xlsx,ppt,pptx\": {\n\t\t\"Microsoft\":\"https://view.officeapps.live.com/op/view.aspx?src=$e_url\",\n\t\t\"Google\":\"https://docs.google.com/gview?url=$e_url&embedded=true\"\n\t},\n\t\"pdf\": {\n\t\t\"PDF.js\":\"https://alist-org.github.io/pdf.js/web/viewer.html?file=$e_url\"\n\t},\n\t\"epub\": {\n\t\t\"EPUB.js\":\"/static/epub.js/viewer.html?url=$e_url\"\n\t}\n}",
+      "help": "",
+      "type": "text",
+      "options": "",
+      "group": 3,
+      "flag": 0
+    },
+    {
+      "key": "audio_cover",
+      "value": "https://jsd.nn.ci/gh/alist-org/logo@main/logo.svg",
+      "help": "",
+      "type": "string",
+      "options": "",
+      "group": 3,
+      "flag": 0
+    },
+    {
+      "key": "audio_autoplay",
+      "value": "true",
+      "help": "",
+      "type": "bool",
+      "options": "",
+      "group": 3,
+      "flag": 0
+    },
+    {
+      "key": "video_autoplay",
+      "value": "true",
+      "help": "",
+      "type": "bool",
+      "options": "",
+      "group": 3,
+      "flag": 0
+    },
+    {
+      "key": "hide_files",
+      "value": "/\\/README.md/i",
+      "help": "",
+      "type": "text",
+      "options": "",
+      "group": 4,
+      "flag": 0
+    },
+    {
+      "key": "package_download",
+      "value": "true",
+      "help": "",
+      "type": "bool",
+      "options": "",
+      "group": 4,
+      "flag": 0
+    },
+    {
+      "key": "customize_head",
+      "value": "<script src=\"https://polyfill.io/v3/polyfill.min.js?features=String.prototype.replaceAll\"></script>",
+      "help": "",
+      "type": "text",
+      "options": "",
+      "group": 4,
+      "flag": 1
+    },
+    {
+      "key": "customize_body",
+      "value": "",
+      "help": "",
+      "type": "text",
+      "options": "",
+      "group": 4,
+      "flag": 1
+    },
+    {
+      "key": "link_expiration",
+      "value": "0",
+      "help": "",
+      "type": "number",
+      "options": "",
+      "group": 4,
+      "flag": 1
+    },
+    {
+      "key": "sign_all",
+      "value": "true",
+      "help": "",
+      "type": "bool",
+      "options": "",
+      "group": 4,
+      "flag": 1
+    },
+    {
+      "key": "privacy_regs",
+      "value": "(?:(?:\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\\.){3}(?:\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\n([[:xdigit:]]{1,4}(?::[[:xdigit:]]{1,4}){7}|::|:(?::[[:xdigit:]]{1,4}){1,6}|[[:xdigit:]]{1,4}:(?::[[:xdigit:]]{1,4}){1,5}|(?:[[:xdigit:]]{1,4}:){2}(?::[[:xdigit:]]{1,4}){1,4}|(?:[[:xdigit:]]{1,4}:){3}(?::[[:xdigit:]]{1,4}){1,3}|(?:[[:xdigit:]]{1,4}:){4}(?::[[:xdigit:]]{1,4}){1,2}|(?:[[:xdigit:]]{1,4}:){5}:[[:xdigit:]]{1,4}|(?:[[:xdigit:]]{1,4}:){1,6}:)\n(?U)access_token=(.*)&",
+      "help": "",
+      "type": "text",
+      "options": "",
+      "group": 4,
+      "flag": 1
+    },
+    {
+      "key": "ocr_api",
+      "value": "https://api.nn.ci/ocr/file/json",
+      "help": "",
+      "type": "string",
+      "options": "",
+      "group": 4,
+      "flag": 0
+    },
+    {
+      "key": "filename_char_mapping",
+      "value": "{\"/\": \"|\"}",
+      "help": "",
+      "type": "text",
+      "options": "",
+      "group": 4,
+      "flag": 0
+    },
+    {
+      "key": "aria2_uri",
+      "value": "http://localhost:6800/jsonrpc",
+      "help": "",
+      "type": "string",
+      "options": "",
+      "group": 5,
+      "flag": 1
+    },
+    {
+      "key": "aria2_secret",
+      "value": "",
+      "help": "",
+      "type": "string",
+      "options": "",
+      "group": 5,
+      "flag": 1
+    },
+    {
+      "key": "token",
+      "value": "alist-6f5fe275-90a8-4ade-835f-2f8e01de1e1cAmwQ7bKsbSxaMOaI1VJSWg3kh4yPHghqzoc78x7lUXwBWi6CflCreAcX4Oh2JGRA",
+      "help": "",
+      "type": "string",
+      "options": "",
+      "group": 0,
+      "flag": 1
+    },
+    {
+      "key": "search_index",
+      "value": "database",
+      "help": "",
+      "type": "select",
+      "options": "database,bleve,none",
+      "group": 6,
+      "flag": 0
+    },
+    {
+      "key": "ignore_paths",
+      "value": "",
+      "help": "one path per line",
+      "type": "text",
+      "options": "",
+      "group": 6,
+      "flag": 1
+    },
+    {
+      "key": "index_progress",
+      "value": "{\"obj_count\":97,\"is_done\":true,\"last_done_time\":\"2023-01-07T13:12:40.32138661+08:00\",\"error\":\"\"}",
+      "help": "",
+      "type": "text",
+      "options": "",
+      "group": 0,
+      "flag": 1
+    },
+    {
+      "key": "github_client_id",
+      "value": "",
+      "help": "",
+      "type": "string",
+      "options": "",
+      "group": 7,
+      "flag": 1
+    },
+    {
+      "key": "github_client_secrets",
+      "value": "",
+      "help": "",
+      "type": "string",
+      "options": "",
+      "group": 7,
+      "flag": 1
+    },
+    {
+      "key": "github_login_enabled",
+      "value": "false",
+      "help": "",
+      "type": "bool",
+      "options": "",
+      "group": 7,
+      "flag": 0
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "1U5zdbZa",
+      "base_path": "/",
+      "role": 2,
+      "permission": 0,
+      "github_id": 0
+    },
+    {
+      "id": 2,
+      "username": "guest",
+      "password": "guest",
+      "base_path": "/",
+      "role": 1,
+      "permission": 0,
+      "github_id": 0
+    },
+    {
+      "id": 3,
+      "username": "mryu",
+      "password": "mryu",
+      "base_path": "/",
+      "role": 0,
+      "permission": 383,
+      "github_id": 0
+    }
+  ],
+  "storages": [
+    {
+      "id": 1,
+      "mount_path": "/",
+      "order": 0,
+      "driver": "Local",
+      "cache_expiration": 0,
+      "status": "work",
+      "addition": "{\"root_folder_path\":\"/root/alistShare\",\"thumbnail\":false,\"show_hidden\":true}",
+      "remark": "",
+      "modified": "2023-01-07T12:02:10.602048315+08:00",
+      "disabled": false,
+      "order_by": "modified",
+      "order_direction": "desc",
+      "extract_folder": "front",
+      "web_proxy": false,
+      "webdav_policy": "native_proxy",
+      "down_proxy_url": ""
+    }
+  ],
+  "metas": []
+}
