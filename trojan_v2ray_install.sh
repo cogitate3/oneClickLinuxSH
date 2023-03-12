@@ -5,21 +5,24 @@ export LC_ALL=C
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
-if [[ $(/usr/bin/id -u) -ne 0 ]]; then
-  sudoCmd="sudo"
+if [[ $(/usr/bin/id -u) -ne 0 ]]; then # $(/usr/bin/id -u)用于获取当前登录用户的UID（User ID），-ne 0用于判断UID是否等于0（即root账户）
+  sudoCmd="sudo" # 如果两者不相等，则表示当前用户不是root用户；反之则表示当前用户是root用户。如果不是，则将sudoCmd变量设置为"sudo"，否则将其设置为空字符串。
 else
   sudoCmd=""
 fi
 
 uninstall() {
-  ${sudoCmd} $(which rm) -rf $1
-  printf "File or Folder Deleted: %s\n" $1
+  ${sudoCmd} $(which rm) -rf $1 # 它接受一个参数 $1。该函数使用系统中的 rm 命令删除指定路径下的文件或目录。
+  printf "File or Folder Deleted: %s\n" $1 # 打印出已删除的文件或目录名称
 }
 
 
-# fonts color
+# fonts color 将要输出的改变文字颜色的内容作为参数传递给它。
 red(){
     echo -e "\033[31m\033[01m$1\033[0m"
+    # - 使用 `echo -e` 命令输出 `$1` 变量（即传入的第一个参数），并通过 ANSI 转义序列设置字体颜色为红色。
+    # - `\033[31m\033[01m` 是设置 ANSI 颜色码的开头部分，其中 `\033[` 是转义序列开始标志，后面的数字表示不同颜色和样式。`\033[31m` 表示将字体颜色设置为红色；`\033[01m` 则表示加粗显示。
+    # - 最后一段 `\033[0m` 是结束 ANSI 颜色码的标志。
 }
 green(){
     echo -e "\033[32m\033[01m$1\033[0m"
