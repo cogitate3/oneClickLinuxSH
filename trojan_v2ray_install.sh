@@ -11,19 +11,61 @@ else
   sudoCmd=""
 fi
 
+if false; then
+    #注释：if加双中括号的条件判断
+    在Shell脚本中，if [[ ... ]]是一个条件语句，用于根据条件执行代码。[[ ... ]]中的内容是条件表达式，可以包含各种测试和比较。以下是一些常见的参数和用法：
+    -eq：等于。例如，if [[ $a -eq $b ]]检查$a是否等于$b。
+    -ne：不等于。例如，if [[ $a -ne $b ]]检查$a是否不等于$b。
+    -gt：大于。例如，if [[ $a -gt $b ]]检查$a是否大于$b。
+    -lt：小于。例如，if [[ $a -lt $b ]]检查$a是否小于$b。
+    -ge：大于或等于。例如，if [[ $a -ge $b ]]检查$a是否大于或等于$b。
+    -le：小于或等于。例如，if [[ $a -le $b ]]检查$a是否小于或等于$b。
+    ==：字符串比较。例如，if [[ $a == $b ]]检查$a是否等于$b。
+    !=：字符串不等于。例如，if [[ $a != $b ]]检查$a是否不等于$b。
+    -z：字符串长度是否为零。例如，if [[ -z $a ]]检查$a的长度是否为零。
+    -n：字符串长度是否不为零。例如，if [[ -n $a ]]检查$a的长度是否不为零。
+    -d：文件是否存在并且是一个目录。例如，if [[ -d $dir ]]检查$dir是否存在并且是一个目录。
+    -f：文件是否存在并且是一个文件。例如，if [[ -f $file ]]检查$file是否存在并且是一个文件。
+    -s：文件是否存在并且大小大于零。例如，if [[ -s $file ]]检查$file是否存在并且大小大于零。
+    -e：文件或目录是否存在。例如，if [[ -e $file ]]检查$file是否存在。
+fi
+
 uninstall() {
   ${sudoCmd} $(which rm) -rf $1 # 它接受一个参数 $1。该函数使用系统中的 rm 命令删除指定路径下的文件或目录。
   printf "File or Folder Deleted: %s\n" $1 # 打印出已删除的文件或目录名称
 }
 
+if false; then
+    #注释：if加双中括号的条件判断
+    在Shell脚本中，变量的引用主要有以下几种语法：
+
+    直接引用：你可以直接使用$变量名的形式来引用一个变量。例如，如果你有一个变量a，你可以使用$a来引用它。
+
+    花括号引用：你也可以使用${变量名}的形式来引用一个变量。这在变量名和后面的文本之间没有空格时非常有用。例如，${a}text。
+
+    默认值：你可以使用${变量名:-默认值}的形式来引用一个变量，如果该变量未设置或为空，则使用默认值。例如，${a:-"default"}。
+
+    赋值默认值：你可以使用${变量名:=默认值}的形式来引用一个变量，如果该变量未设置或为空，则将默认值赋给该变量，并返回默认值。例如，${a:="default"}。
+
+    错误提示：你可以使用${变量名:?错误信息}的形式来引用一个变量，如果该变量未设置或为空，则打印错误信息并退出脚本。例如，${a:?"variable a is not set"}。
+
+    字符串长度：你可以使用${#变量名}的形式来获取一个变量的长度。例如，${#a}。
+fi
 
 # fonts color 将要输出的改变文字颜色的内容作为参数传递给它。
 red(){
-    echo -e "\033[31m\033[01m$1\033[0m"
+    echo -e "\033[31m\033[01m$1\033[0m" # 当执行 echo -e "文本" 时，它会将 "文本" 打印到终端，并且可以解析其中的转义字符。例如，\n 表示换行符、\t 表示制表符等。
     # - 使用 `echo -e` 命令输出 `$1` 变量（即传入的第一个参数），并通过 ANSI 转义序列设置字体颜色为红色。
     # - `\033[31m\033[01m` 是设置 ANSI 颜色码的开头部分，其中 `\033[` 是转义序列开始标志，后面的数字表示不同颜色和样式。`\033[31m` 表示将字体颜色设置为红色；`\033[01m` 则表示加粗显示。
     # - 最后一段 `\033[0m` 是结束 ANSI 颜色码的标志。
 }
+
+if false; then
+    # - 使用 `echo -e` 命令输出 `$1` 变量（即传入的第一个参数），并通过 ANSI 转义序列设置字体颜色为红色。
+    # - `\033[31m\033[01m` 是设置 ANSI 颜色码的开头部分，其中 `\033[` 是转义序列开始标志，后面的数字表示不同颜色和样式。`\033[31m` 表示将字体颜色设置为红色；`\033[01m` 则表示加粗显示。
+    # - 最后一段 `\033[0m` 是结束 ANSI 颜色码的标志。
+fi
+
 green(){
     echo -e "\033[32m\033[01m$1\033[0m"
 }
@@ -61,10 +103,16 @@ function checkArchitecture(){
 		* )     osArchitecture="arm" ;;
 	esac
 }
+# This is a shell/bash function called `checkArchitecture()` that is used to determine the operating system architecture. 
+# The function uses the `uname -m` command to get the machine hardware name. It then uses a case statement to compare the machine hardware name with different architectures. 
+# If the machine hardware name matches one of the following: `i386`, `i686`, or `x86_64`, it sets the variable `osArchitecture` to the corresponding architecture: `386` for `i386` and `i686`, and `amd64` for `x86_64`. 
+# If the machine hardware name matches `arm`, it uses `dpkg --print-architecture` to obtain the operating system architecture. If the output of `dpkg --print-architecture` contains `arm64`, it sets `osArchitecture` to `arm64`, otherwise it sets it to `arm`. 
+# If the machine hardware name doesn't match any of the above cases, it sets `osArchitecture` to `arm`.
+# In summary, this function checks the system's hardware architecture and determines the corresponding operating system architecture.`
 
 function checkCPU(){
 	osCPUText=$(cat /proc/cpuinfo | grep vendor_id | uniq)
-	if [[ $osCPUText =~ "GenuineIntel" ]]; then
+	if [[ $osCPUText =~ "GenuineIntel" ]]; then # 正则表达式匹配操作符=~判断变量osCPUText是否包含字符串
 		osCPU="intel"
     else
         osCPU="amd"
@@ -75,12 +123,17 @@ function checkCPU(){
 
 # 检测系统发行版代号
 function getLinuxOSRelease(){
-    if [[ -f /etc/redhat-release ]]; then
+    if [[ -f /etc/redhat-release ]]; then # 检查/etc/redhat-release文件是否存在来确定是否为CentOS系统。
         osRelease="centos"
         osSystemPackage="yum"
         osSystemMdPath="/usr/lib/systemd/system/"
         osReleaseVersionCodeName=""
-    elif cat /etc/issue | grep -Eqi "debian|raspbian"; then
+    elif cat /etc/issue | grep -Eqi "debian|raspbian"; then  
+# -E：这个选项告诉grep使用扩展的正则表达式。
+# -q：这个选项让grep在找到匹配的文本后立即退出，不再输出更多的结果。
+# -i：这个选项让grep在搜索时忽略大小写。
+# "debian|raspbian"：这是一个正则表达式，|符号表示"或"，所以这个表达式会匹配包含"debian"或"raspbian"的文本。
+# 所以，grep -Eqi "debian|raspbian"这个命令会在输入的文本中搜索包含"debian"或"raspbian"（忽略大小写）的行，并在找到第一个匹配的行后立即退出。希望这个信息对你有所帮助！
         osRelease="debian"
         osSystemPackage="apt-get"
         osSystemMdPath="/lib/systemd/system/"
@@ -123,8 +176,15 @@ function getLinuxOSRelease(){
 
 # 检测系统版本号
 getLinuxOSVersion(){
-    if [[ -s /etc/redhat-release ]]; then
+    if [[ -s /etc/redhat-release ]]; then # 
         osReleaseVersion=$(grep -oE '[0-9.]+' /etc/redhat-release)
+# 这段代码是在bash脚本中使用grep命令从文件/etc/redhat-release中提取版本号，并将其赋值给变量osReleaseVersion。
+# osReleaseVersion=：这是一个变量赋值语句，将等号右边的结果赋值给变量osReleaseVersion。
+# $(...)：这是命令替换的语法，它会执行括号中的命令，并将其输出替换到原位置。
+# grep -oE '[0-9.]+' /etc/redhat-release：这是grep命令，用于在文件/etc/redhat-release中搜索匹配正则表达式[0-9.]+的文本。
+# -o选项让grep只输出匹配的部分。
+# -E选项让grep使用扩展正则表达式。
+# '[0-9.]+'是一个正则表达式，匹配一个或多个数字或点。
     else
         osReleaseVersion=$(grep -oE '[0-9.]+' /etc/issue)
     fi
