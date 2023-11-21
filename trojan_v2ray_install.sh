@@ -11,56 +11,63 @@ else
   sudoCmd=""
 fi
 
-if false; then
-    #注释：if加双中括号的条件判断
-    在Shell脚本中，if [[ ... ]]是一个条件语句，用于根据条件执行代码。[[ ... ]]中的内容是条件表达式，可以包含各种测试和比较。以下是一些常见的参数和用法：
-    -eq：等于。例如，if [[ $a -eq $b ]]检查$a是否等于$b。
-    -ne：不等于。例如，if [[ $a -ne $b ]]检查$a是否不等于$b。
-    -gt：大于。例如，if [[ $a -gt $b ]]检查$a是否大于$b。
-    -lt：小于。例如，if [[ $a -lt $b ]]检查$a是否小于$b。
-    -ge：大于或等于。例如，if [[ $a -ge $b ]]检查$a是否大于或等于$b。
-    -le：小于或等于。例如，if [[ $a -le $b ]]检查$a是否小于或等于$b。
-    ==：字符串比较。例如，if [[ $a == $b ]]检查$a是否等于$b。
-    !=：字符串不等于。例如，if [[ $a != $b ]]检查$a是否不等于$b。
-    -z：字符串长度是否为零。例如，if [[ -z $a ]]检查$a的长度是否为零。
-    -n：字符串长度是否不为零。例如，if [[ -n $a ]]检查$a的长度是否不为零。
-    -d：文件是否存在并且是一个目录。例如，if [[ -d $dir ]]检查$dir是否存在并且是一个目录。
-    -f：文件是否存在并且是一个文件。例如，if [[ -f $file ]]检查$file是否存在并且是一个文件。
-    -s：文件是否存在并且大小大于零。例如，if [[ -s $file ]]检查$file是否存在并且大小大于零。
-    -e：文件或目录是否存在。例如，if [[ -e $file ]]检查$file是否存在。
+if false; then #shell的子命令，并返回值到父进程中
+    true
+    # $(...)可以扩展成另一个命令的运行结果，该命令的所有输出都会作为返回值。
+    # 比如echo $(date) 返回date命令的运行结果：
+    # 在Shell中，`()`用于创建子Shell。在子Shell中执行的命令是在父Shell的一个子进程中运行的，这意味着子Shell可以访问父Shell的变量，但是不能改变它们。换句话说，子Shell不会改变父Shell的环境⁴。
+fi
+
+if false; then #if加双中括号来做条件判断
+    true
+    # [[ expression ]]这种判断形式，支持正则表达式。[和]与内部的表达式之间必须有空格。
+    # 在Shell脚本中，if [[ ... ]]是一个条件语句，用于根据条件执行代码。[[ ... ]]中的内容是条件表达式，可以包含各种测试和比较。以下是一些常见的参数和用法：
+    # -eq：等于。例如，if [[ $a -eq $b ]]检查$a是否等于$b。
+    # -ne：不等于。例如，if [[ $a -ne $b ]]检查$a是否不等于$b。
+    # -gt：大于。例如，if [[ $a -gt $b ]]检查$a是否大于$b。
+    # -lt：小于。例如，if [[ $a -lt $b ]]检查$a是否小于$b。
+    # -ge：大于或等于。例如，if [[ $a -ge $b ]]检查$a是否大于或等于$b。
+    # -le：小于或等于。例如，if [[ $a -le $b ]]检查$a是否小于或等于$b。
+    # ==：字符串比较。例如，if [[ $a == $b ]]检查$a是否等于$b。
+    # !=：字符串不等于。例如，if [[ $a != $b ]]检查$a是否不等于$b。
+    # -z：字符串长度是否为零。例如，if [[ -z $a ]]检查$a的长度是否为零。
+    # -n：字符串长度是否不为零。例如，if [[ -n $a ]]检查$a的长度是否不为零。
+    # -d：文件是否存在并且是一个目录。例如，if [[ -d $dir ]]检查$dir是否存在并且是一个目录。
+    # -f：文件是否存在并且是一个文件。例如，if [[ -f $file ]]检查$file是否存在并且是一个文件。
+    # -s：文件是否存在并且大小大于零。例如，if [[ -s $file ]]检查$file是否存在并且大小大于零。
+    # -e：文件或目录是否存在。例如，if [[ -e $file ]]检查$file是否存在。
 fi
 
 uninstall() {
-  ${sudoCmd} $(which rm) -rf $1 # 它接受一个参数 $1。该函数使用系统中的 rm 命令删除指定路径下的文件或目录。
+  ${sudoCmd} "$(which rm)" -rf $1 # 它接受一个参数 $1。该函数使用系统中的 rm 命令删除指定路径下的文件或目录。
   printf "File or Folder Deleted: %s\n" $1 # 打印出已删除的文件或目录名称
 }
 
-if false; then
-    #注释：if加双中括号的条件判断
-    在Shell脚本中，变量的引用主要有以下几种语法：
+if false; then #变量引用
+    true
+    
+    # 在Shell脚本中，变量的引用主要有以下几种语法：
 
-    直接引用：你可以直接使用$变量名的形式来引用一个变量。例如，如果你有一个变量a，你可以使用$a来引用它。
+    # 直接引用：你可以直接使用$变量名的形式来引用一个变量。例如，如果你有一个变量a，你可以使用$a来引用它。
 
-    花括号引用：你也可以使用${变量名}的形式来引用一个变量。这在变量名和后面的文本之间没有空格时非常有用。例如，${a}text。
+    # 花括号引用：你也可以使用${变量名}的形式来引用一个变量。这在变量名和后面的文本之间没有空格时非常有用。例如，${a}text。
 
-    默认值：你可以使用${变量名:-默认值}的形式来引用一个变量，如果该变量未设置或为空，则使用默认值。例如，${a:-"default"}。
+    # 默认值：你可以使用${变量名:-默认值}的形式来引用一个变量，如果该变量未设置或为空，则使用默认值。例如，${a:-"default"}。
 
-    赋值默认值：你可以使用${变量名:=默认值}的形式来引用一个变量，如果该变量未设置或为空，则将默认值赋给该变量，并返回默认值。例如，${a:="default"}。
+    # 赋值默认值：你可以使用${变量名:=默认值}的形式来引用一个变量，如果该变量未设置或为空，则将默认值赋给该变量，并返回默认值。例如，${a:="default"}。
 
-    错误提示：你可以使用${变量名:?错误信息}的形式来引用一个变量，如果该变量未设置或为空，则打印错误信息并退出脚本。例如，${a:?"variable a is not set"}。
+    # 错误提示：你可以使用${变量名:?错误信息}的形式来引用一个变量，如果该变量未设置或为空，则打印错误信息并退出脚本。例如，${a:?"variable a is not set"}。
 
-    字符串长度：你可以使用${#变量名}的形式来获取一个变量的长度。例如，${#a}。
+    # 字符串长度：你可以使用${#变量名}的形式来获取一个变量的长度。例如，${#a}。
 fi
 
 # fonts color 将要输出的改变文字颜色的内容作为参数传递给它。
 red(){
     echo -e "\033[31m\033[01m$1\033[0m" # 当执行 echo -e "文本" 时，它会将 "文本" 打印到终端，并且可以解析其中的转义字符。例如，\n 表示换行符、\t 表示制表符等。
-    # - 使用 `echo -e` 命令输出 `$1` 变量（即传入的第一个参数），并通过 ANSI 转义序列设置字体颜色为红色。
-    # - `\033[31m\033[01m` 是设置 ANSI 颜色码的开头部分，其中 `\033[` 是转义序列开始标志，后面的数字表示不同颜色和样式。`\033[31m` 表示将字体颜色设置为红色；`\033[01m` 则表示加粗显示。
-    # - 最后一段 `\033[0m` 是结束 ANSI 颜色码的标志。
 }
 
-if false; then
+if false; then #echo命令的-e选项，字体颜色设置
+    true
     # - 使用 `echo -e` 命令输出 `$1` 变量（即传入的第一个参数），并通过 ANSI 转义序列设置字体颜色为红色。
     # - `\033[31m\033[01m` 是设置 ANSI 颜色码的开头部分，其中 `\033[` 是转义序列开始标志，后面的数字表示不同颜色和样式。`\033[31m` 表示将字体颜色设置为红色；`\033[01m` 则表示加粗显示。
     # - 最后一段 `\033[0m` 是结束 ANSI 颜色码的标志。
@@ -91,6 +98,25 @@ osSystemPackage=""
 osSystemMdPath=""
 osSystemShell="bash"
 
+if false; then #变量的定义和引用
+    true
+    # 声明一个变量，如果变量的值包含空格，则必须将值放在引号中。如：myvar="hello world"
+    # Bash 没有数据类型的概念，所有的变量值都是字符串。
+    # 变量可以重复赋值，后面的赋值会覆盖前面的赋值。
+    # 如果同一行定义多个变量，必须使用分号（;）分隔。
+    # a=z                     # 变量 a 赋值为字符串 z
+    # b="a string"            # 变量值包含空格，就必须放在引号里面
+    # c="a string and $b"     # 变量值可以引用其他变量的值
+    # d="\t\ta string\n"      # 变量值可以使用转义字符
+    # e=$(ls -l foo.txt)      # 变量值可以是命令的执行结果
+    # f=$((5 * 7))            # 变量值可以是数学运算的结果
+    # 读取变量的时候，直接在变量名前加上$就可以了。每当 Shell 看到以$开头的单词时，就会尝试读取这个变量名对应的值。
+    # 如果变量不存在，Bash 不会报错，而会输出空字符。
+    # ${变量名}的形式来引用一个变量基本不会出错。读取变量的语法$foo，可以看作是${foo}的简写形式。
+    # 如果变量的值本身也是变量，可以使用${!varname}的语法，读取最终的值。
+    # 如果变量值包含连续空格（或制表符和换行符），最好放在双引号里面读取。
+fi
+
 
 function checkArchitecture(){
 	# https://stackoverflow.com/questions/48678152/how-to-detect-386-amd64-arm-or-arm64-os-architecture-via-shell-bash
@@ -103,12 +129,17 @@ function checkArchitecture(){
 		* )     osArchitecture="arm" ;;
 	esac
 }
-# This is a shell/bash function called `checkArchitecture()` that is used to determine the operating system architecture. 
-# The function uses the `uname -m` command to get the machine hardware name. It then uses a case statement to compare the machine hardware name with different architectures. 
-# If the machine hardware name matches one of the following: `i386`, `i686`, or `x86_64`, it sets the variable `osArchitecture` to the corresponding architecture: `386` for `i386` and `i686`, and `amd64` for `x86_64`. 
-# If the machine hardware name matches `arm`, it uses `dpkg --print-architecture` to obtain the operating system architecture. If the output of `dpkg --print-architecture` contains `arm64`, it sets `osArchitecture` to `arm64`, otherwise it sets it to `arm`. 
-# If the machine hardware name doesn't match any of the above cases, it sets `osArchitecture` to `arm`.
-# In summary, this function checks the system's hardware architecture and determines the corresponding operating system architecture.`
+
+if false; then #case条件判断
+    true
+    # This is a shell/bash function called `checkArchitecture()` that is used to determine the operating system architecture. 
+    # The function uses the `uname -m` command to get the machine hardware name. It then uses a case statement to compare the machine hardware name with different architectures. 
+    # If the machine hardware name matches one of the following: `i386`, `i686`, or `x86_64`, it sets the variable `osArchitecture` to the corresponding architecture: `386` for `i386` and `i686`, and `amd64` for `x86_64`. 
+    # If the machine hardware name matches `arm`, it uses `dpkg --print-architecture` to obtain the operating system architecture. If the output of `dpkg --print-architecture` contains `arm64`, it sets `osArchitecture` to `arm64`, otherwise it sets it to `arm`. 
+    # If the machine hardware name doesn't match any of the above cases, it sets `osArchitecture` to `arm`.
+    # In summary, this function checks the system's hardware architecture and determines the corresponding operating system architecture.
+fi
+
 
 function checkCPU(){
 	osCPUText=$(cat /proc/cpuinfo | grep vendor_id | uniq)
@@ -197,7 +228,7 @@ getLinuxOSVersion(){
         osInfo=$NAME
         osReleaseVersionNo=$VERSION_ID
 
-        if [ -n $VERSION_CODENAME ]; then
+        if [[ -n $VERSION_CODENAME ]]; then
             osReleaseVersionCodeName=$VERSION_CODENAME
         fi
     elif type lsb_release >/dev/null 2>&1; then
@@ -943,7 +974,7 @@ function compareRealIpWithLocalIp(){
     isDomainValidInput=${isDomainValidInput:-Y}
 
     if [[ $isDomainValidInput == [Yy] ]]; then
-        if [ -n $1 ]; then
+        if [ -n "$1" ]; then
             configNetworkRealIp=`ping $1 -c 1 | sed '1{s/[^(]*(//;s/).*//;q}'`
             # configNetworkLocalIp=`curl ipv4.icanhazip.com`
             configNetworkLocalIp=`curl v4.ident.me`
