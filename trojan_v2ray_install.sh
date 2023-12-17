@@ -415,6 +415,9 @@ function changeLinuxSSHPort(){
     green " 修改的SSH登陆的端口号, 不要使用常用的端口号. 例如 20|21|23|25|53|69|80|110|443|123!"
     read -p "请输入要修改的端口号(必须是纯数字并且在1024~65535之间或22):" osSSHLoginPortInput
     osSSHLoginPortInput=${osSSHLoginPortInput:-0}
+# 右边的部分是一种参数扩展的语法，表示如果变量 osSSHLoginPortInput 已经定义并且不为空，就取它的值，否则取 0
+# 这种语法的作用是，给变量 osSSHLoginPortInput 提供一个默认值，避免变量未定义或为空的情况
+# 这行代码的意思是，如果用户没有输入 ssh 登录端口，就将变量 osSSHLoginPortInput 的值设为 0
 
     if [ $osSSHLoginPortInput -eq 22 -o $osSSHLoginPortInput -gt 1024 -a $osSSHLoginPortInput -lt 65535 ]; then
         sed -i "s/#\?Port [0-9]*/Port $osSSHLoginPortInput/g" /etc/ssh/sshd_config
