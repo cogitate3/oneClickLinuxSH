@@ -7,15 +7,6 @@
 
 set -eu
 
-# 这一行设置了两个选项：
-#
-# -e: 在发生错误（包括命令的返回值不是0）时，立即退出脚本。
-# -u: 在引用到尚未赋值的变量时，立即退出脚本。
-#
-# 这两个选项合起来可以避免很多常见的脚本问题，比如：
-# 1. 错误可能会被忽略，导致脚本继续运行下去，产生非预期的结果。
-# 2. 变量没有被赋值时，脚本可能会以空字符串或随机值继续运行下去。
-
 # All the code is wrapped in a main function that gets called at the
 # bottom of the file, so that a truncated partial download doesn't end
 # up executing half a script.
@@ -33,7 +24,7 @@ main() {
 	PACKAGETYPE=""
 	APT_KEY_TYPE="" # Only for apt-based distros
 	APT_SYSTEMCTL_START=false # Only needs to be true for Kali
-	TRACK="${TRACK:-stable}" # This code snippet sets the variable TRACK to the value "stable" if it is not already set.
+	TRACK="${TRACK:-stable}"
 
 	case "$TRACK" in
 		stable|unstable)
@@ -68,23 +59,19 @@ main() {
 					APT_KEY_TYPE="legacy"
 				fi
 				;;
-			debian|spark) # 把sparky当作debian就行了，本代码其他地方都不用修改。下面的三个变量针对最新版sparky和debian都没有问题。
-				OS="debian"
-				VERSION="bookworm"
+			debian)
+				OS="$ID"
+				VERSION="$VERSION_CODENAME"
 				PACKAGETYPE="apt"
 				# Third-party keyrings became the preferred method of
 				# installation in Debian 11 (Bullseye).
-				# Check if the VERSION_ID environment variable is unset or set to an empty string
 				if [ -z "${VERSION_ID:-}" ]; then
-					# Comment for clarity: If VERSION_ID is not set, assume a rolling release strategy.
-					# It's expected that the user should keep their system up to date in such cases.
-					APT_KEY_TYPE="keyring"  # Set APT_KEY_TYPE to "keyring" for rolling releases
-				# Check if VERSION_ID is a number less than 11 (older release)
+					# rolling release. If you haven't kept current, that's on you.
+					APT_KEY_TYPE="keyring"
 				elif [ "$VERSION_ID" -lt 11 ]; then
-					APT_KEY_TYPE="legacy"   # Set APT_KEY_TYPE to "legacy" for older releases
-				# If above conditions are false, it means VERSION_ID is set and not less than 11
+					APT_KEY_TYPE="legacy"
 				else
-					APT_KEY_TYPE="keyring"  # Set APT_KEY_TYPE to "keyring" for current releases
+					APT_KEY_TYPE="keyring"
 				fi
 				;;
 			linuxmint)
@@ -297,12 +284,8 @@ main() {
 
 	# If we failed to detect something through os-release, consult
 	# uname and try to infer things from that.
-	if [ -z "$OS" ]; then # if $OS is empty. If it is, the code inside the if statement will be executed.
+	if [ -z "$OS" ]; then
 		if type uname >/dev/null 2>&1; then
-		# >/dev/null: This redirects the standard output (stdout) to /dev/null, effectively discarding any output the type command would produce on the console. /dev/null is a special file that discards all data written to it (sometimes referred to as a "black hole").
-		# 2>&1: This part redirects the standard error (stderr) to wherever standard output (stdout) is currently going, which in this case is /dev/null. The number 2 represents stderr, and &1 tells the shell to redirect to the same place as file descriptor 1 (stdout).
-		# When you combine these parts, the statement attempts to silently check whether the uname command exists and is executable without producing any output on the terminal.
-		# If uname can be found and is executable, the type command will return an exit status of 0 ("true" in shell script terms), and the subsequent block of code after then will be executed. Conversely, if uname cannot be found or is not executable, the type command will return a non-zero exit status ("false"), and the script will move to the next part of the conditional statement (likely an else or elif clause, or simply continuing past the fi which ends the if block).
 			case "$(uname)" in
 				FreeBSD)
 					# FreeBSD before 12.2 doesn't have
@@ -347,7 +330,7 @@ main() {
 
 	TEST_URL="https://pkgs.tailscale.com/"
 	RC=0
-	TEST_OUT=$($CURL "$TEST_URL" 2>&1) || RC=$? # This code snippet sets a test URL, initializes a variable called RC to 0, and then uses the CURL command to fetch the content of the test URL and store it in the TEST_OUT variable. If the CURL command fails, it sets the RC variable to the exit code of the command.# 如果curl命令执行成功，RC变量将被设置为0；如果curl命令执行失败，RC变量将被设置为curl命令的返回状态码。
+	TEST_OUT=$($CURL "$TEST_URL" 2>&1) || RC=$? 
 	if [ $RC != 0 ]; then
 		echo "The installer cannot reach $TEST_URL"
 		echo "Please make sure that your machine has internet access."
@@ -363,8 +346,13 @@ main() {
 		ubuntu|debian|raspbian|centos|oracle|rhel|amazon-linux|opensuse|photon)
 			# Check with the package server whether a given version is supported.
 			URL="https://pkgs.tailscale.com/$TRACK/$OS/$VERSION/installer-supported"
-			$CURL "$URL" 2> /dev/null | grep -q OK || OS_UNSUPPORTED=1
+			$CURL "$URL" 2> /dev/null | grep -q OK || OS_UNSUPPORTED=1 
 			;;
+			# 2> /dev/null: This redirection sends any error output from the curl command to /dev/null, effectively discarding it. Only standard output is being considered for further processing.
+
+			# The output of the curl command is piped (|) into grep -q OK, which silently (-q) searches for the string "OK". If the string "OK" exists in the response content, this means the OS version is supported by the installer.
+
+			#The entire condition grep -q OK || OS_UNSUPPORTED=1: Uses a logical OR || so that if the grep command fails (meaning "OK" was not found, and thus the OS version is not supported), the variable OS_UNSUPPORTED is set to 1.
 		fedora)
 			# All versions supported, no version checking required.
 			;;
