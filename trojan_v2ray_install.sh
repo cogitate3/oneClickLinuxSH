@@ -260,13 +260,27 @@ osPort443=""
 osSELINUXCheck=""
 osSELINUXCheckIsRebootInput=""
 
+# 下面的函数作用是检测Linux系统上的端口使用情况。
+# 首先，代码尝试安装net-tools和socat软件包（第2行）。然后，通过执行命令netstat -tlpn获取当前正在监听的TCP端口，并使用awk和grep过滤出80端口和443端口（第5-8行）。
+# 接下来，如果检测到80端口被占用，则获取占用该端口的进程，并输出一条错误信息（第10-16行）。同样地，如果检测到443端口被占用，则获取占用该端口的进程，并输出一条错误信息（第18-24行）。
+# 之后，代码会检查SELinux状态是否为强制模式或宽容模式。如果是强制模式，则输出一条警告信息并询问用户是否重启VPS以禁用SELinux（第26-40行）。如果是宽容模式，则也输出一条警告信息并询问用户是否重启VPS以禁用SELinux（第42-56行）。
+# 最后，在根据不同操作系统类型进行防火墙设置方面有几个条件分支语句。对于CentOS系统，在版本号为6或更早版本时会输出一个错误消息并退出脚本；关闭firewalld防火墙服务（第59-63行）。对于Ubuntu系统，在版本号为14或更早版本时会输出一个错误消息并退出脚本；关闭ufw防火墙服务（第66-70行）。对于Debian系统，更新软件包列表（第73行）。
 function testLinuxPortUsage(){
     $osSystemPackage -y install net-tools socat
 
+    # shellcheck disable=SC2006
     osPort80=`netstat -tlpn | awk -F '[: ]+' '$1=="tcp"{print $5}' | grep -w 80`
+    # osPort80 是一个变量，用于存储占用 80 端口的进程的 PID.= 是赋值运算符，表示将右边的值赋给左边的变量.` 是反引号，表示命令替换，即将命令的输出作为值赋给变量.
+    # netstat 是一个外部命令，用于显示网络连接、路由表、接口统计等信息.-t 是 netstat 的选项，表示只显示 TCP 协议的连接.-l 是 netstat 的选项，表示只显示监听状态的连接.-p 是 netstat 的选项，表示显示每个连接对应的进程 ID.-n 是 netstat 的选项，表示不解析主机名和服务名，而是显示数字形式的 IP 地址和端口号.
+    # | 是管道符，表示将前一个命令的输出作为后一个命令的输入.
+    # awk 是一个外部命令，用于对文本进行模式匹配和处理.-F '[: ]+' 是 awk 的选项，表示指定字段分隔符为一个或多个冒号或空格.'$1=="tcp"{print $5}' 是 awk 的命令，表示对每一行进行条件判断和输出操作.$1 表示第一个字段，即协议类型，$5 表示第五个字段，即本地地址和端口.== 是比较运算符，表示等于."tcp" 是一个字符串常量，表示 TCP 协议.print 是 awk 的内置函数，表示输出.这个 awk 命令的意思是，如果第一个字段的值等于 "tcp"，就输出第五个字段的值.
+    # grep 是一个外部命令，用于对文本进行过滤和搜索.-w 是 grep 的选项，表示只匹配整个单词，而不是部分匹配.80 是一个整数常量，表示 80 端口.这个 grep 命令的意思是，只输出包含 80 这个单词的行.
+    # 这行代码的作用是，通过 netstat 命令获取所有 TCP 协议的监听连接，然后通过 awk 命令提取本地地址和端口，最后通过 grep 命令过滤出 80 端口的连接，将其对应的进程 ID 赋值给osPort80变量.
+    # shellcheck disable=SC2006
     osPort443=`netstat -tlpn | awk -F '[: ]+' '$1=="tcp"{print $5}' | grep -w 443`
 
     if [ -n "$osPort80" ]; then
+        # shellcheck disable=SC2006
         process80=`netstat -tlpn | awk -F '[: ]+' '$5=="80"{print $9}'`
         red "==========================================================="
         red "检测到80端口被占用，占用进程为：${process80}，本次安装结束"
@@ -275,6 +289,7 @@ function testLinuxPortUsage(){
     fi
 
     if [ -n "$osPort443" ]; then
+        # shellcheck disable=SC2006
         process443=`netstat -tlpn | awk -F '[: ]+' '$5=="443"{print $9}'`
         red "============================================================="
         red "检测到443端口被占用，占用进程为：${process443}，本次安装结束"
@@ -419,7 +434,7 @@ function changeLinuxSSHPort(){
 # 这种语法的作用是，给变量 osSSHLoginPortInput 提供一个默认值，避免变量未定义或为空的情况
 # 这行代码的意思是，如果用户没有输入 ssh 登录端口，就将变量 osSSHLoginPortInput 的值设为 0
 
-    if [ $osSSHLoginPortInput -eq 22 -o $osSSHLoginPortInput -gt 1024 -a $osSSHLoginPortInput -lt 65535 ]; then
+    if [ $osSSHLoginPortInput -eq 22 -o "$osSSHLoginPortInput" -gt 1024 -a $osSSHLoginPortInput -lt 65535 ]; then
         sed -i "s/#\?Port [0-9]*/Port $osSSHLoginPortInput/g" /etc/ssh/sshd_config
 
         if [ "$osRelease" == "centos" ] ; then
