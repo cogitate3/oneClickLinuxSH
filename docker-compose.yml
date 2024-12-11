@@ -1,0 +1,24 @@
+version: "3.4"
+services: 
+  wireguard:
+    container_name: wireguard
+    image: place1/wg-access-server
+    cap_add:
+      - NET_ADMIN
+    environment:
+      WG_WIREGUARD_PRIVATE_KEY:OC9ZfxEFTl+kGvOEwJICYiqqoWvqvO68iFhfyfgB53E=        
+      WG_STORAGE: sqlite3:///wireguard-clients/db.sqlite3
+      # WG_EXTERNAL_HOST: my-host.com
+      # WG_CONFIG: "/config.yaml"
+      WG_ADMIN_USERNAME: yuzheng
+      WG_ADMIN_PASSWORD: 11271224final
+    volumes:
+      - /etc/wireguard:/data"
+      - /etc/wireguard/clients:/wireguard-clients
+      # - ./conf/wireguard/config.yaml:/config.yaml:ro # if you have a custom config file
+    ports:
+      - "8000:8000/tcp"
+      - "51820:51820/udp"
+    devices:
+      - "/dev/net/tun:/dev/net/tun"
+    restart: unless-stopped

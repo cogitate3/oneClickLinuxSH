@@ -1,0 +1,204 @@
+107.175.123.150, alt3.top
+========================================================
+本次脚本安装完成，现在进行检测
+========================================================
+现在开始检测安装情况，请按任意键继续 ...
+
+
+===========================
+      Nginx安装正常
+===========================
+
+
+===========================
+      Trojan安装正常
+===========================
+
+
+========================================================
+ 本过程安装了sudo/nginx/wget/unzip/zip/curl/tar/trojan
+ 现在你访问 http://alt3.top 应该有伪装站点的存在了
+ 伪装站点目录在 /usr/share/nginx/html 可自行更换网站
+ Trojan配置文件在 /usr/local/etc/trojan
+ 检测没有问题之后可以进行下一部分安装
+========================================================
+root@YellowOrchid-VM:~# wget -N --no-check-certificate "https://raw.githubusercontent.com/V2RaySSR/Trojansh/master/troja                                                                     n2.sh" && chmod +x trojan2.sh && ./trojan2.sh
+--2020-06-29 01:30:45--  https://raw.githubusercontent.com/V2RaySSR/Trojansh/master/trojan2.sh
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 151.101.192.133, 151.101.0.133, 151.101.64.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|151.101.192.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2779 (2.7K) [text/plain]
+Saving to: ‘trojan2.sh’
+
+trojan2.sh                    100%[===================================================>]   2.71K  --.-KB/s   in 0s
+
+Last-modified header missing -- time-stamps turned off.
+2020-06-29 01:30:45 (14.5 MB/s) - ‘trojan2.sh’ saved [2779/2779]
+==========================================================
+支持：centos7+/debian9+/ubuntu16.04+
+网站：www.v2rayssr.com （已开启禁止国内访问）
+YouTube频道：波仔分享
+本脚本禁止在国内网站转载
+==========================================================
+简介：本脚本为Trojan分解安装第二部分（证书申请）
+==========================================================
+若同意上述协议，请按任意键继续 ...
+
+==========================================
+      获取到你的域名为 alt3.top
+==========================================
+
+
+==========================================
+       安装acme.sh 并开始签发证书
+==========================================
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   775    0   775    0     0   5643      0 --:--:-- --:--:-- --:--:--  5615
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  193k  100  193k    0     0  2457k      0 --:--:-- --:--:-- --:--:-- 2475k
+[Mon Jun 29 01:30:55 EDT 2020] Installing from online archive.
+[Mon Jun 29 01:30:55 EDT 2020] Downloading https://github.com/acmesh-official/acme.sh/archive/master.tar.gz
+[Mon Jun 29 01:30:56 EDT 2020] Extracting master.tar.gz
+[Mon Jun 29 01:30:56 EDT 2020] It is recommended to install socat first.
+[Mon Jun 29 01:30:56 EDT 2020] We use socat for standalone server if you use standalone mode.
+[Mon Jun 29 01:30:56 EDT 2020] If you don't use standalone mode, just ignore this warning.
+[Mon Jun 29 01:30:56 EDT 2020] Installing to /root/.acme.sh
+[Mon Jun 29 01:30:56 EDT 2020] Installed to /root/.acme.sh/acme.sh
+[Mon Jun 29 01:30:56 EDT 2020] Installing alias to '/root/.bashrc'
+[Mon Jun 29 01:30:56 EDT 2020] OK, Close and reopen your terminal to start using acme.sh
+[Mon Jun 29 01:30:56 EDT 2020] Installing cron job
+no crontab for root
+no crontab for root
+[Mon Jun 29 01:30:56 EDT 2020] Good, bash is found, so change the shebang to use bash as preferred.
+[Mon Jun 29 01:30:56 EDT 2020] OK
+[Mon Jun 29 01:30:56 EDT 2020] Install success!
+[Mon Jun 29 01:30:57 EDT 2020] Create account key ok.
+[Mon Jun 29 01:30:57 EDT 2020] Registering account
+[Mon Jun 29 01:30:58 EDT 2020] Registered
+[Mon Jun 29 01:30:58 EDT 2020] ACCOUNT_THUMBPRINT='S5EZqF9QAEB6WetcAtv1DQ22YZGvHoy7SFgyEGbf8tA'
+[Mon Jun 29 01:30:58 EDT 2020] Creating domain key
+[Mon Jun 29 01:30:58 EDT 2020] The domain key is here: /root/.acme.sh/alt3.top/alt3.top.key
+[Mon Jun 29 01:30:58 EDT 2020] Single domain='alt3.top'
+[Mon Jun 29 01:30:58 EDT 2020] Getting domain auth token for each domain
+[Mon Jun 29 01:30:59 EDT 2020] Getting webroot for domain='alt3.top'
+[Mon Jun 29 01:30:59 EDT 2020] Verifying: alt3.top
+[Mon Jun 29 01:30:59 EDT 2020] Nginx mode for domain:alt3.top
+[Mon Jun 29 01:30:59 EDT 2020] Found conf file: /etc/nginx/nginx.conf
+[Mon Jun 29 01:30:59 EDT 2020] Backup /etc/nginx/nginx.conf to /root/.acme.sh/alt3.top/backup/alt3.top.nginx.conf
+[Mon Jun 29 01:30:59 EDT 2020] Check the nginx conf before setting up.
+[Mon Jun 29 01:30:59 EDT 2020] OK, Set up nginx config file
+[Mon Jun 29 01:30:59 EDT 2020] nginx conf is done, let's check it again.
+[Mon Jun 29 01:30:59 EDT 2020] Reload nginx
+[Mon Jun 29 01:31:04 EDT 2020] Success
+[Mon Jun 29 01:31:04 EDT 2020] Restoring from /root/.acme.sh/alt3.top/backup/alt3.top.nginx.conf to /etc/nginx/nginx.con                                                                     f
+[Mon Jun 29 01:31:04 EDT 2020] Reload nginx
+[Mon Jun 29 01:31:04 EDT 2020] Verify finished, start to sign.
+[Mon Jun 29 01:31:04 EDT 2020] Lets finalize the order, Le_OrderFinalize: https://acme-v02.api.letsencrypt.org/acme/fina                                                                     lize/90015623/3972939183
+[Mon Jun 29 01:31:05 EDT 2020] Download cert, Le_LinkCert: https://acme-v02.api.letsencrypt.org/acme/cert/044bd61336e7d5                                                                     d92d9dd39a2125f3d1c6ba
+[Mon Jun 29 01:31:05 EDT 2020] Cert success.
+-----BEGIN CERTIFICATE-----
+MIIFRjCCBC6gAwIBAgISBEvWEzbn1dktndOaISXz0ca6MA0GCSqGSIb3DQEBCwUA
+MEoxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MSMwIQYDVQQD
+ExpMZXQncyBFbmNyeXB0IEF1dGhvcml0eSBYMzAeFw0yMDA2MjkwNDMxMDZaFw0y
+MDA5MjcwNDMxMDZaMBMxETAPBgNVBAMTCGFsdDMudG9wMIIBIjANBgkqhkiG9w0B
+AQEFAAOCAQ8AMIIBCgKCAQEAzEUdeIjXqdgdO/xH4cM5ysCRz1dZRyXc3gHaGj4d
+A/GyCyAXF07SGFbgVt3mMgvNdr+NJLqP8y9uYH5aqVHYhJMPHFZBvx3yVhsYhJy3
+P/Ps9AQ3rC+UpYb1n8w11dc0T8Ynq028uwy3iWcY+ygfWgoBJwMq2MeZukuvl7FB
+HHOSSIlPLFmLcWzXPuCH1Y7WQoTTsQaBjku6FQb2R66rNGKpdJ/TPqvrTz3qqfn5
+x9eKNucU5F7MQeL2X/rmZ4hUrsfAVhjFVENHwgcwSBQ9K+0rHaVNnEizdWtMAs5v
+Owz3ulRXgBwO6tCU8jHsDWZ2MEu4ss/FKvkDuQHwAK/vXQIDAQABo4ICWzCCAlcw
+DgYDVR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAM
+BgNVHRMBAf8EAjAAMB0GA1UdDgQWBBRyPWd4mPDTNNHp07IwRfkPKaclyjAfBgNV
+HSMEGDAWgBSoSmpjBH3duubRObemRWXv86jsoTBvBggrBgEFBQcBAQRjMGEwLgYI
+KwYBBQUHMAGGImh0dHA6Ly9vY3NwLmludC14My5sZXRzZW5jcnlwdC5vcmcwLwYI
+KwYBBQUHMAKGI2h0dHA6Ly9jZXJ0LmludC14My5sZXRzZW5jcnlwdC5vcmcvMBMG
+A1UdEQQMMAqCCGFsdDMudG9wMEwGA1UdIARFMEMwCAYGZ4EMAQIBMDcGCysGAQQB
+gt8TAQEBMCgwJgYIKwYBBQUHAgEWGmh0dHA6Ly9jcHMubGV0c2VuY3J5cHQub3Jn
+MIIBAgYKKwYBBAHWeQIEAgSB8wSB8ADuAHUA8JWkWfIA0YJAEC0vk4iOrUv+HUfj
+meHQNKawqKqOsnMAAAFy/o66RwAABAMARjBEAiB6FZs+glx/3od6g3/yq3TWm3gg
+P2hTTbopR7+d4BSGGAIgcBBWeO8TyIIv2/cWI4F3YLiFqLQ4AzduJOe6ladhRkUA
+dQCyHgXMi6LNiiBOh2b5K7mKJSBna9r6cOeySVMt74uQXgAAAXL+jrpFAAAEAwBG
+MEQCIEKRIppNfHN7zqg6WrLULNI4c9QrA0yw+TY7bHA3ecZyAiAmioxeXcgaN46Z
+7Z7OsTdWmt/FpGZZbbw08ownpC32pDANBgkqhkiG9w0BAQsFAAOCAQEAM+N2Gj3W
+5z0kbOp2Y4ANPGoAw3QVqEHoyBsb6T1PN7FKyctz3oQI+iqSV/6GGum9IbSqkfnq
+f4doT/FkC4MAEv6lXM9ym7SQRFx7D6m/3gwSCAYpwL7AKL8xS0aKkmisQ0ZXBlnP
+D0C/1qmYkJGt5lNahf8wXzCuLLdyuDR3WkfhegEHh2A8BH8fhDFFVgpbHn9NPYBK
+b53zniPMJXcbEkvSyuzE5UFVmkaJx7kH1TBHRFwH4hGrRAZXG2vL3TJ8kDqifgOb
+o0GwolKA/tlr19sMgsjXO8pT3+WD/sl8weca7BKCVH624hycRnJc5dTq2T5bbo9H
+KvuVYb2YguLU4g==
+-----END CERTIFICATE-----
+[Mon Jun 29 01:31:05 EDT 2020] Your cert is in  /root/.acme.sh/alt3.top/alt3.top.cer
+[Mon Jun 29 01:31:05 EDT 2020] Your cert key is in  /root/.acme.sh/alt3.top/alt3.top.key
+[Mon Jun 29 01:31:05 EDT 2020] The intermediate CA cert is in  /root/.acme.sh/alt3.top/ca.cer
+[Mon Jun 29 01:31:05 EDT 2020] And the full chain certs is there:  /root/.acme.sh/alt3.top/fullchain.cer
+[Mon Jun 29 01:31:05 EDT 2020] Installing key to:/usr/local/etc/trojan/private.key
+[Mon Jun 29 01:31:05 EDT 2020] Installing full chain to:/usr/local/etc/trojan/cert.crt
+[Mon Jun 29 01:31:05 EDT 2020] Already uptodate!
+[Mon Jun 29 01:31:05 EDT 2020] Upgrade success!
+==========================================
+检测到证书文件正常签发
+证书文件的目录为 /usr/local/etc/trojan
+已经设置证书为自动续签
+可以进行第三部分脚本的操作
+==========================================
+root@YellowOrchid-VM:~#
+root@YellowOrchid-VM:~# wget -N --no-check-certificate "https://raw.githubusercontent.com/V2RaySSR/Trojansh/master/trojan3.sh" && chmod +x trojan3.sh && ./trojan3.sh
+--2020-06-29 01:31:49--  https://raw.githubusercontent.com/V2RaySSR/Trojansh/master/trojan3.sh
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 151.101.128.133, 151.101.192.133, 151.101.0.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|151.101.128.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5080 (5.0K) [text/plain]
+Saving to: ‘trojan3.sh’
+
+trojan3.sh                                      100%[======================================================================================================>]   4.96K  --.-KB/s   in 0s
+
+Last-modified header missing -- time-stamps turned off.
+2020-06-29 01:31:50 (22.7 MB/s) - ‘trojan3.sh’ saved [5080/5080]
+==========================================================
+支持：centos7+/debian9+/ubuntu16.04+
+网站：www.v2rayssr.com （已开启禁止国内访问）
+YouTube频道：波仔分享
+本脚本禁止在国内网站转载
+==========================================================
+简介：本脚本为Trojan分解安装第三部分（Trojan服务器配置）
+==========================================================
+若同意上述协议，请按任意键继续 ... Failed to restart trojan.service: Unit trojan.service failed to load: Invalid argument. See system logs and 'systemctl status trojan.service' for details.
+
+=================================================================
+Trojan服务器配置完成
+现在可以尝试访问 https://alt3.top
+检查证书是否有效及正确配置
+==================================================================
+======================请详细阅读下面的说明========================
+==================================================================
+Chrome浏览器地址栏前面若没有小锁，Trojan服务绝对不成功
+Chrome浏览器若是有小锁，Trojan服务绝对正常
+若是客户端不能连接Trojan,请尝试重启Trojan服务
+Trojan服务重启命令：systemctl restart trojan
+==================================================================
+==================================================================
+你的Trojan配置信息存放在：/usr/local/etc/trojan/配置.txt
+==================================================================
+==================================================================
+你的Trojan配置信息为：
+域名：alt3.top
+密码：8b73dbf6
+端口：443
+若需修改密码或忘记密码
+请访问VPS: /usr/local/etc/trojan/config.json
+推荐Win客户端下载：https://www.v2rayssr.com/trojanwin.html
+推荐安卓客户端软件：https://github.com/apache/ignite/releases
+MacOS和IOS太高端，请自行选择 Trojan 客户端
+==================================================================
+root@YellowOrchid-VM:~#
+
+
+
+
+
+
+
+
+
