@@ -44,6 +44,7 @@ fi
 # Xray current version
 CURRENT_VERSION=''
 
+
 # Xray latest release version
 RELEASE_LATEST=''
 

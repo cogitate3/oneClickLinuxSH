@@ -156,22 +156,6 @@ install_wps() {
   post_installation_menu
 }
 
-# 函数：安装 Docker 和 Docker Compose
-install_docker() {
-  apt update && apt install -y \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
-  apt install -y docker-ce docker-ce-cli containerd.io
-  curl -fsSL https://get.docker.com -o get-docker.sh
-  sudo sh get-docker.sh
-  curl -L "https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-  chmod +x /usr/local/bin/docker-compose
-  echo -e "${green}Docker 和 Docker Compose 安装完成。${plain}"
-  post_installation_menu
-}
-
 # 函数：安装 micro 编辑器
 install_micro() {
     # 检查是否已安装 micro
