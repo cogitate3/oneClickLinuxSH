@@ -8,17 +8,17 @@ plain='\033[0m'
 
 # 检查是否以 root 身份运行
 if [[ $EUID -ne 0 ]]; then
-  echo -e "${red}某些操作需要 root 权限，请使用 sudo 运行此脚本。${plain}"
-  exit 1
+    echo -e "${red}某些操作需要 root 权限，请使用 sudo 运行此脚本。${plain}"
+    exit 1
 fi
 
 # 通用依赖安装函数
 install_common_dependencies() {
     echo -e "${green}正在安装常用系统依赖...${plain}"
-    
+
     # 更新包列表
     apt-get update
-    
+
     # 定义依赖列表
     local dependencies=(
         "libgit2-1.5"
@@ -37,7 +37,7 @@ install_common_dependencies() {
         "geany"
         "terminator"
     )
-    
+
     # 安装依赖
     for dep in "${dependencies[@]}"; do
         if ! dpkg -s "$dep" >/dev/null 2>&1; then
@@ -47,19 +47,19 @@ install_common_dependencies() {
             echo -e "${green}$dep 已安装。${plain}"
         fi
     done
-    
+
     echo -e "${green}常用系统依赖安装完成。${plain}"
-    post_installation_menu
+    show_install_complete
 }
 
 # 函数：安装 zsh 和 oh-my-zsh
 install_zsh_ohmyzsh() {
     install_common_dependencies
-    
+
     chsh -s $(which zsh)
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     echo -e "${green}zsh 和 oh-my-zsh 安装完成。${plain}"
-    post_installation_menu
+    show_install_complete
 }
 
 # 函数：安装 Homebrew (仅在需要安装 eg 时才需要)
@@ -67,61 +67,61 @@ install_homebrew() {
     install_common_dependencies
 
     # Check if Homebrew is already installed
-    if command -v brew &> /dev/null; then
+    if command -v brew &>/dev/null; then
         echo -e "${green}Homebrew 已经安装。${plain}"
-        post_installation_menu
+        show_install_complete
         return 0
     fi
 
     # Install Homebrew
     echo -e "${green}正在安装 Homebrew...${plain}"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    
+
     # Check installation status
     if [ $? -eq 0 ]; then
         # Configure Homebrew path for different shells
         echo -e "${green}Homebrew 安装成功。正在配置环境...${plain}"
-        
+
         # Add Homebrew to PATH for bash
         if [ -f ~/.bashrc ]; then
-            echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
+            echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >>~/.bashrc
         fi
-        
+
         # Add Homebrew to PATH for zsh
         if [ -f ~/.zshrc ]; then
-            echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.zshrc
+            echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >>~/.zshrc
         fi
-        
+
         # Reload shell environment
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        
+
         echo -e "${green}Homebrew 安装并配置完成。${plain}"
     else
         echo -e "${red}Homebrew 安装失败。请检查网络连接和系统权限。${plain}"
-        post_installation_menu
+        show_install_complete
         return 1
     fi
 
-    post_installation_menu
+    show_install_complete
 }
 
 # 函数：安装 cheat.sh
 install_cheatsh() {
-  apt install -y rlwrap
-  curl -s https://cht.sh/:cht.sh | sudo tee /usr/local/bin/cht.sh && chmod +x /usr/local/bin/cht.sh
-  echo -e "${green}cheat.sh 安装完成。 使用方法：cht.sh 命令 (例如 cht.sh curl)${plain}"
-  post_installation_menu
+    apt install -y rlwrap
+    curl -s https://cht.sh/:cht.sh | sudo tee /usr/local/bin/cht.sh && chmod +x /usr/local/bin/cht.sh
+    echo -e "${green}cheat.sh 安装完成。 使用方法：cht.sh 命令 (例如 cht.sh curl)${plain}"
+    post_installation_menu
 }
 
 # 函数：安装 eg
 install_eg() {
-  if ! command -v brew &> /dev/null; then
-    echo -e "${red}请先安装 Homebrew。${plain}"
-    return 1
-  fi
-  brew install eg-examples
-  echo -e "${green}eg 安装完成。 使用方法：eg 命令 (例如 eg curl)${plain}"
-  post_installation_menu
+    if ! command -v brew &>/dev/null; then
+        echo -e "${red}请先安装 Homebrew。${plain}"
+        return 1
+    fi
+    brew install eg-examples
+    echo -e "${green}eg 安装完成。 使用方法：eg 命令 (例如 eg curl)${plain}"
+    post_installation_menu
 }
 
 # 函数：安装 angrysearch
@@ -134,32 +134,32 @@ install_angrysearch() {
     cd ~/Apps/ANGRYsearch-1.0.4
     sudo ./install.sh
     echo -e "${green}angrysearch 安装完成。${plain}"
-    post_installation_menu
+    show_install_complete
 }
 
 # 函数：安装 tabby
 install_tabby() {
-  cd ~/Downloads
-  wget https://github.com/Eugeny/tabby/releases/download/v1.0.188/tabby-1.0.188-linux-x64.deb
-  sudo dpkg -i tabby-1.0.188-linux-x64.deb
-  echo -e "${green}tabby 安装完成。${plain}"
-  post_installation_menu
+    cd ~/Downloads
+    wget https://github.com/Eugeny/tabby/releases/download/v1.0.188/tabby-1.0.188-linux-x64.deb
+    sudo dpkg -i tabby-1.0.188-linux-x64.deb
+    echo -e "${green}tabby 安装完成。${plain}"
+    post_installation_menu
 }
 
 # 函数：安装 WPS Office (注意版本号可能需要更新)
 install_wps() {
-  cd ~/Downloads
-  wget https://wps-linux-personal.wpscdn.cn/wps/download/ep/Linux2019/11664/wps-office_11.1.0.11664_amd64.deb
-  sudo dpkg -i wps-office_11.1.0.11664_amd64.deb
-  sudo apt-mark hold wps-office  # 阻止 WPS 自动更新
-  echo -e "${green}WPS Office 安装完成。  已阻止自动更新，请手动更新到稳定版本。${plain}"
-  post_installation_menu
+    cd ~/Downloads
+    wget https://wps-linux-personal.wpscdn.cn/wps/download/ep/Linux2019/11664/wps-office_11.1.0.11664_amd64.deb
+    sudo dpkg -i wps-office_11.1.0.11664_amd64.deb
+    sudo apt-mark hold wps-office # 阻止 WPS 自动更新
+    echo -e "${green}WPS Office 安装完成。  已阻止自动更新，请手动更新到稳定版本。${plain}"
+    post_installation_menu
 }
 
 # 函数：安装 micro 编辑器
 install_micro() {
     # 检查是否已安装 micro
-    if command -v micro &> /dev/null; then
+    if command -v micro &>/dev/null; then
         echo -e "${green}micro 编辑器已安装。${plain}"
         post_installation_menu
         return 0
@@ -187,7 +187,7 @@ install_micro() {
     rm -rf ~/Downloads/micro_install
 
     # 验证安装
-    if command -v micro &> /dev/null; then
+    if command -v micro &>/dev/null; then
         echo -e "${green}micro 编辑器安装成功！${plain}"
         micro --version
     else
@@ -201,37 +201,39 @@ install_micro() {
 
 # 函数：安装 Brave 浏览器
 install_brave() {
-  apt update && apt install -y curl
-  curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-  echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-  apt update && apt install -y brave-browser
-  echo -e "${green}Brave 浏览器安装完成。${plain}"
-  post_installation_menu
+    apt update && apt install -y curl
+    curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+    echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+    apt update && apt install -y brave-browser
+    echo -e "${green}Brave 浏览器安装完成。${plain}"
+    post_installation_menu
 }
 
 # 函数：安装 Plank 快捷启动器
 install_plank() {
-  apt update && apt install -y plank
-  echo -e "${green}Plank 快捷启动器安装完成。${plain}"
-  post_installation_menu
+    apt update && apt install -y plank
+    echo -e "${green}Plank 快捷启动器安装完成。${plain}"
+    post_installation_menu
 }
 
 # 函数：安装 v2rayA (两种方法)
 install_v2raya() {
-  read -p "请选择安装方法 (1: 使用脚本, 2: 使用软件源): " method
-  case $method in
+    read -p "请选择安装方法 (1: 使用脚本, 2: 使用软件源): " method
+    case $method in
     1)
-      curl -Ls https://mirrors.v2raya.org/go.sh | sudo bash
-      sudo systemctl disable v2ray --now
-      echo -e "${green}v2rayA (脚本安装) 完成。  systemd 服务已禁用。${plain}" ;;
+        curl -Ls https://mirrors.v2raya.org/go.sh | sudo bash
+        sudo systemctl disable v2ray --now
+        echo -e "${green}v2rayA (脚本安装) 完成。  systemd 服务已禁用。${plain}"
+        ;;
     2)
-      wget -qO - https://apt.v2raya.org/key/public-key.asc | sudo tee /etc/apt/trusted.gpg.d/v2raya.asc
-      echo "deb https://apt.v2raya.org/ v2raya main" | sudo tee /etc/apt/sources.list.d/v2raya.list
-      apt update && apt install -y v2raya
-      echo -e "${green}v2rayA (软件源安装) 完成。${plain}" ;;
+        wget -qO - https://apt.v2raya.org/key/public-key.asc | sudo tee /etc/apt/trusted.gpg.d/v2raya.asc
+        echo "deb https://apt.v2raya.org/ v2raya main" | sudo tee /etc/apt/sources.list.d/v2raya.list
+        apt update && apt install -y v2raya
+        echo -e "${green}v2rayA (软件源安装) 完成。${plain}"
+        ;;
     *) echo -e "${red}无效的选项。${plain}" ;;
-  esac
-  post_installation_menu
+    esac
+    post_installation_menu
 }
 
 # 函数：安装 Windsurf
@@ -258,13 +260,13 @@ install_windsurf() {
 
     # 下载并安装 Windsurf
     echo -e "${green}正在安装 Windsurf...${plain}"
-    
+
     # 添加 Windsurf GPG 密钥
     curl -fsSL "https://windsurf-stable.codeiumdata.com/wVxQEIWkwPUEAGf3/windsurf.gpg" | sudo gpg --dearmor -o /usr/share/keyrings/windsurf-stable-archive-keyring.gpg
-    
+
     # 添加 Windsurf 软件源
-    echo "deb [signed-by=/usr/share/keyrings/windsurf-stable-archive-keyring.gpg arch=amd64] https://windsurf-stable.codeiumdata.com/wVxQEIWkwPUEAGf3/apt stable main" | sudo tee /etc/apt/sources.list.d/windsurf.list > /dev/null
-    
+    echo "deb [signed-by=/usr/share/keyrings/windsurf-stable-archive-keyring.gpg arch=amd64] https://windsurf-stable.codeiumdata.com/wVxQEIWkwPUEAGf3/apt stable main" | sudo tee /etc/apt/sources.list.d/windsurf.list >/dev/null
+
     # 更新并安装 Windsurf
     apt-get update
     apt-get install -y windsurf
@@ -283,7 +285,7 @@ install_windsurf() {
 # 函数：安装 eggs (Debian/Ubuntu 系统工具)
 install_eggs() {
     # 检查是否已安装 eggs
-    if command -v eggs &> /dev/null; then
+    if command -v eggs &>/dev/null; then
         echo -e "${green}eggs 已安装。${plain}"
         post_installation_menu
         return 0
@@ -291,7 +293,7 @@ install_eggs() {
 
     # 添加 GPG 密钥和仓库
     echo -e "${yellow}正在添加 eggs 仓库...${plain}"
-    
+
     # 安装必要的依赖
     sudo apt update
     sudo apt install -y gnupg curl
@@ -311,7 +313,7 @@ install_eggs() {
     fi
 
     # 验证安装
-    if command -v eggs &> /dev/null; then
+    if command -v eggs &>/dev/null; then
         echo -e "${green}eggs 安装成功！${plain}"
         eggs --version
     else
@@ -323,97 +325,96 @@ install_eggs() {
     post_installation_menu
 }
 
-# 通用的安装后菜单函数
-post_installation_menu() {
-    while true; do
-        echo ""
-        echo -e "${green}安装完成！请选择下一步操作：${plain}"
-        echo "0. 退出脚本"
-        echo "1. 返回主菜单"
-        read -p "请输入选项 (0-1): " post_choice
-
-        case $post_choice in
-            0)
-                echo -e "${green}退出脚本。${plain}"
-                exit 0
-                ;;
-            1)
-                echo -e "${green}返回主菜单。${plain}"
-                return
-                ;;
-            *)
-                echo -e "${red}无效的选项，请重新输入。${plain}"
-                ;;
-        esac
-    done
+# 安装完成提示
+show_install_complete() {
+    echo -e "${green}安装完成！${plain}"
+    echo -e "${yellow}按任意键返回菜单...${plain}"
+    read -n 1 -s
 }
 
-# 显示菜单
-while true; do
-    clear
-    echo -e "${green}系统工具一键安装脚本 v2.1${plain}"
-    echo "0. 安装所有常用系统依赖"
-    echo "1. 安装 zsh 和 oh-my-zsh"
-    echo "2. 安装 Homebrew"
-    echo "3. 安装 cheat.sh"
-    echo "4. 安装 eg"
-    echo "5. 安装 angrysearch"
-    echo "6. 安装 tabby"
-    echo "7. 安装 WPS Office"
-    echo "8. 安装 Docker 和 Docker Compose"
-    echo "9. 安装 Brave 浏览器"
-    echo "10. 安装 v2rayA"
-    echo "11. 安装 Windsurf IDE"
-    echo "12. 安装 micro 编辑器"
-    echo "13. 安装 eggs"
-    echo "14. 按顺序安装所有软件"
-    echo "15. 退出"
-    read -p "请输入选项 (0-15): " choice
+# 显示主菜单
+show_main_menu() {
+    while true; do
+        clear
+        echo -e "${green}系统工具一键安装脚本 v2.2${plain}"
+        echo -e "${yellow}=== 系统工具 ===${plain}"
+        printf "%-30s %-30s\n" "1. 安装所有常用系统依赖" "2. 安装 zsh 和 oh-my-zsh"
+        printf "%-30s %-30s\n" "3. 安装 Homebrew" "4. 安装 micro 编辑器"
+        printf "%-30s %-30s\n" "5. 安装 eggs" ""
 
-    case $choice in
-        0) install_common_dependencies ;;
-        1) install_zsh_ohmyzsh ;;
-        2) install_homebrew ;;
-        3) install_cheatsh ;;
-        4) install_eg ;;
-        5) install_angrysearch ;;
-        6) install_tabby ;;
-        7) install_wps ;;
-        8) install_docker ;;
-        9) install_brave ;;
-        10) install_v2raya ;;
-        11) install_windsurf ;;
-        12) install_micro ;;
-        13) install_eggs ;;
-        14)
-            install_common_dependencies
-            install_zsh_ohmyzsh
-            install_homebrew
-            install_cheatsh
-            install_eg
-            install_angrysearch
-            install_tabby
-            install_wps
-            install_docker
-            install_brave
-            install_v2raya
-            install_windsurf
-            install_micro
-            install_eggs
-            ;;
-        15)
+        echo -e "${yellow}\n=== 开发工具 ===${plain}"
+        printf "%-30s %-30s\n" "6. 安装 cheat.sh" "7. 安装 eg"
+        printf "%-30s %-30s\n" "8. 安装 tabby" "9. 安装 Windsurf IDE"
+
+        echo -e "${yellow}\n=== 办公软件 ===${plain}"
+        printf "%-30s %-30s\n" "10. 安装 WPS Office" "11. 安装 Brave 浏览器"
+
+        echo -e "${yellow}\n=== 网络工具 ===${plain}"
+        printf "%-30s %-30s\n" "12. 安装 v2rayA" "13. 安装 angrysearch"
+
+        echo -e "${yellow}\n=== 其他工具 ===${plain}"
+        printf "%-30s %-30s\n" "14. 安装 Docker 和 Docker Compose" ""
+
+        echo -e "${yellow}\n=== 全局选项 ===${plain}"
+        printf "%-30s %-30s\n" "15. 一键安装所有软件" ""
+        echo -e "${red}0. 退出${plain}"
+
+        read -p "请输入选项 (0-15): " choice
+
+        case $choice in
+        1) install_common_dependencies ;;
+        2) install_zsh_ohmyzsh ;;
+        3) install_homebrew ;;
+        4) install_micro ;;
+        5) install_eggs ;;
+        6) install_cheatsh ;;
+        7) install_eg ;;
+        8) install_tabby ;;
+        9) install_windsurf ;;
+        10) install_wps ;;
+        11) install_brave ;;
+        12) install_v2raya ;;
+        13) install_angrysearch ;;
+        14) install_docker ;;
+        15) install_all_software ;;
+        0)
             echo -e "${green}退出脚本。${plain}"
             exit 0
             ;;
         *)
             echo -e "${red}无效的选项，请重新输入。${plain}"
+            sleep 1
             ;;
-    esac
-done
+        esac
+    done
+}
+
+# 一键安装所有软件
+install_all_software() {
+    install_common_dependencies
+    install_zsh_ohmyzsh
+    install_homebrew
+    install_cheatsh
+    install_eg
+    install_angrysearch
+    install_tabby
+    install_wps
+    install_docker
+    install_brave
+    install_v2raya
+    install_windsurf
+    install_micro
+    install_eggs
+    echo -e "${green}所有软件安装完成！${plain}"
+    sleep 2
+}
+
+# 启动主菜单
+show_main_menu
 
 # 为 zsh 添加 sudo 快捷键 (仅在 zsh 下生效)
 if [ -n "$ZSH_VERSION" ]; then
-    echo "bindkey -s '\e\e' '\C-asudo \C-e'" >> ~/.zshrc
+    echo "bindkey -s '\e\e' '\C-asudo \C-e'" >>~/.zshrc
     echo "请重新打开终端或运行 'exec zsh' 以应用更改。"
 else
     echo "提示：sudo 快捷键仅在 zsh 下生效，当前 shell 不是 zsh。"
